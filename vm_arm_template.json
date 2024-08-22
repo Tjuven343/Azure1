@@ -4,7 +4,8 @@
 "parameters": {},
 "variables": {},
 "functions": [],
-"resources": [    // Virtual Network and Subnet
+"resources": [    
+    // Virtual Network and Subnet
     {
         "name": "DemoVirtualNetwork",
         "type": "Microsoft.Network/virtualNetworks",
@@ -54,6 +55,19 @@
                         "sourcePortRange": "*",
                         "sourceAddressPrefix": "*",
                         "destinationPortRange": "22",
+                        "destinationAddressPrefix": "*"
+                    }
+                },
+                {
+                    "name": "HTTP",
+                    "properties": {
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "priority": 200,
+                        "protocol": "Tcp",
+                        "sourcePortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationPortRange": "80",
                         "destinationAddressPrefix": "*"
                     }
                 }
@@ -107,7 +121,18 @@
             "osProfile": {
                 "computerName": "DemoVM",
                 "adminUsername": "azureuser",
-                "adminPassword": "S3cur3P@ssw0rd"
+                "linuxConfiguration": {
+                    "disablePasswordAuthentication": true,
+                    "ssh": {
+                        "publicKeys": [
+                            {
+                                "path": "/home/azureuser/.ssh/authorized_keys",
+                                "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpBzKcNoRQmYa85hAhCM892AiNy32NUCAl8n71WSRyflYyYT5mmFGobaKeYCYqLCbPMcfDrlL33CXJtlk4qERzDxiXMxKD1/gCdz2OAPCDPNwKsH4DUnw/s280WXoqBoCJHt5i0obcw3B5qnNbGubqsDXsttjGfLVhjRFXI6TRW9HB5SYmIJKRyVDCLdahidzlksZHid2W1UoGpWgdPSXNFIjg1KJP4EJU0b5lYrAx6VyMkd2Kc4jjdybWqU73O4nwWkQTJ31tR1zqYTynaaZLdcf1leToLftGYkyG+B9Rit9uX7JQmA1imRt/ltyxhi4Gc0NwWMbf+JMnQdMUX+TtvNBs7zeWW0qF7NHDWDgcZ3zbqo6hsGTRjwwhoI2bdq0d4z6U5DIDXhr+iTtp5ctC2kVqNE5OOEE8XibMXXTfyQp42OZ1lzDKzhfmOqNLYRpoMRfzdOyoV6zOhpDQSOr4+fvLoOv8PzrlAuZtzcKV/orzl2ogSlyoDI0sL+EEuocPf801F2RQ6fQSJHJoufUGcaW5Gtw4/I1of/HpukXvWx/5vdHOUJxB1P9mxTCSVd4GJWeHxIN16YM82tKN5cKGLjETiKjGHODkAVmczH0yqC478j4/2nfANjw6p7EKPlilDnSEdJCM5gyz0RVmjQCjo97Qmp7XQ417HGsmk6asjQ== Angmar@DESKTOP-SC7H0R0"
+                            }
+                        ]
+                    }
+                },
+                "customData": "IyEvYmluL2Jhc2gNCg0KI3VwZGF0ZSB0aGUgcGFja2FnZSBsaXN0DQphcHQtZ2V0IHVwZGF0ZQ0KDQojaW5zdGFsbCBOZ2lueA0KYXB0LWdldCBpbnN0YWxsIC15IG5naW54DQoNCiNDcmVhdGUgSFRNTA0KDQpjYXQgPDxFT0YgPiAvdmFyL3d3dy9odG1sL2luZGV4Lmh0bWwNCjwhRE9DVFlQRSBodG1sPg0KPGh0bWwgbGFuZz0iZW4iPg0KPGhlYWQ+DQogICAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPg0KICAgIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4NCiAgICA8dGl0bGU+UmVkIExldHRlcmluZzwvdGl0bGU+DQogICAgPHN0eWxlPg0KICAgICAgICBib2R5IHsNCiAgICAgICAgICAgIGNvbG9yOiByZWQ7DQogICAgICAgIH0NCiAgICA8L3N0eWxlPg0KPC9oZWFkPg0KPGJvZHk+DQogICAgPGgxPk5pa2xhcyBza2FwYWRlIGRlbm5hIHNpZGE8L2gxPg0KICAgIDxwPlRoaXMgaXMgYSBwYXJhZ3JhcGggd2l0aCByZWQgdGV4dC48L3A+DQo8L2JvZHk+DQo8L2h0bWw+DQpFT0Y="
             },
             "storageProfile": {
                 "imageReference": {
@@ -130,7 +155,6 @@
             }
         }
     }
-    
-    ],
+],
 "outputs": {}
 }
